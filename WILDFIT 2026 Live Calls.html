@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WILDFIT 2026 Live Calls</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F6F1; --surface:#FFFFFF; --ink:#11281B; --muted:#5B6F61;
+  --forest:#0C3B22; --leaf:#2E8B4E; --sprout:#DDEEDC; --line:#D3E0D3;
+  --gold:#B7862B; --hero-ink:#F3FAF2;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0A1A11; --surface:#10261A; --ink:#E5F1E6; --muted:#9BB4A2;
+    --forest:#06140C; --leaf:#5CC27D; --sprout:#183823; --line:#1F3B29;
+    --gold:#E0B25A; --hero-ink:#EAF6EB;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0A1A11; --surface:#10261A; --ink:#E5F1E6; --muted:#9BB4A2;
+  --forest:#06140C; --leaf:#5CC27D; --sprout:#183823; --line:#1F3B29;
+  --gold:#E0B25A; --hero-ink:#EAF6EB;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Jost",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-size:1.0625rem;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* Hero */
+.hero{
+  background:
+    radial-gradient(ellipse 60% 90% at 0% 0%, rgba(70,170,95,.45), transparent 60%),
+    radial-gradient(ellipse 50% 80% at 100% 100%, rgba(40,130,70,.40), transparent 60%),
+    var(--forest);
+  color:var(--hero-ink);
+  padding:clamp(3rem,8vw,5.5rem) 1.25rem clamp(2.5rem,6vw,4rem);
+  text-align:center;position:relative;overflow:hidden;
+}
+.hero svg.leaf{position:absolute;opacity:.10;fill:#9CE0AE;pointer-events:none}
+.brand{font-weight:300;font-size:clamp(2.75rem,9vw,5.5rem);letter-spacing:.32em;
+  margin:0 0 .25rem;padding-left:.32em;line-height:1}
+.by{font-weight:400;font-size:.9rem;letter-spacing:.35em;opacity:.8;margin:0;padding-left:.35em}
+.rule{width:4rem;height:1px;background:currentColor;opacity:.45;margin:1.5rem auto}
+.hero h1{font-weight:400;font-size:clamp(1.4rem,3.6vw,2rem);margin:0 0 .5rem;letter-spacing:.01em}
+.hero p.sub{margin:0 auto;max-width:38rem;opacity:.85;font-weight:300}
+
+.wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem}
+
+/* Facts strip */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  margin:-1.75rem auto 0;position:relative;box-shadow:0 10px 30px rgba(12,59,34,.12)}
+.fact{background:var(--surface);padding:1.1rem 1.25rem}
+.fact b{display:block;font-size:1.35rem;font-weight:500;color:var(--leaf);line-height:1.2}
+.fact span{color:var(--muted);font-size:.95rem}
+
+/* Next call */
+.next{margin:2.25rem 0 0;padding:1.4rem 1.5rem;border-radius:14px;
+  background:var(--sprout);border-left:5px solid var(--leaf);
+  display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.5rem}
+.next .label{font-weight:500;color:var(--leaf)}
+.next .when{font-size:1.35rem;font-weight:500}
+.next .countdown{color:var(--muted)}
+
+.notice{margin:1rem 0 0;color:var(--muted);font-size:.98rem}
+.notice strong{color:var(--ink);font-weight:500}
+
+/* Months */
+.month{margin:3rem 0 0}
+.month h2{font-weight:300;font-size:clamp(1.9rem,4.5vw,2.6rem);margin:0 0 1rem;
+  display:flex;align-items:baseline;gap:.75rem;color:var(--ink)}
+.month h2 small{font-size:1rem;color:var(--muted);font-weight:400}
+.month-body{display:grid;grid-template-columns:17rem 1fr;gap:1.75rem;align-items:start}
+@media (max-width:760px){.month-body{grid-template-columns:1fr}.grid{max-width:20rem}}
+
+/* Mini calendar grid */
+.grid{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1rem}
+.grid .dow,.grid .days{display:grid;grid-template-columns:repeat(7,1fr);text-align:center}
+.grid .dow span{font-size:.75rem;color:var(--muted);padding-bottom:.4rem}
+.grid .days span{aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  font-size:.92rem;border-radius:50%;margin:2px}
+.grid .days .call{background:var(--leaf);color:#fff;font-weight:600}
+.grid .days .tbd{border:2px dashed var(--gold);color:var(--ink);font-weight:600}
+.grid .days .today{outline:2px solid var(--ink);outline-offset:-2px}
+.grid .days .past.call{opacity:.4}
+.grid .days .muted{color:var(--muted);opacity:.5}
+
+/* Call list */
+.calls{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem}
+.call-row{display:grid;grid-template-columns:4.5rem 1fr auto;gap:1.1rem;align-items:center;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.85rem 1.1rem}
+.date-block{text-align:center;line-height:1.05}
+.date-block .d{font-size:2rem;font-weight:500;color:var(--leaf);display:block}
+.date-block .w{font-size:.85rem;color:var(--muted)}
+.info .t{font-weight:500;font-size:1.08rem}
+.info .m{color:var(--muted);font-size:.95rem}
+.time{text-align:right;line-height:1.3}
+.time .local{font-weight:500;font-size:1.08rem}
+.time .ldn{color:var(--muted);font-size:.88rem}
+.call-row.special{border-color:var(--leaf);box-shadow:inset 4px 0 0 var(--leaf)}
+.call-row.tbd{border-style:dashed;border-color:var(--gold);box-shadow:inset 4px 0 0 var(--gold)}
+.call-row.tbd .date-block .d{color:var(--gold);font-size:1.45rem}
+.call-row.past{opacity:.5}
+.call-row.is-next{border-color:var(--leaf);box-shadow:0 0 0 2px var(--leaf)}
+.pill{display:inline-block;font-size:.78rem;font-weight:500;padding:.1rem .55rem;border-radius:99px;
+  background:var(--sprout);color:var(--leaf);margin-left:.4rem;vertical-align:2px}
+.pill.gold{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+@media (max-width:520px){
+  .call-row{grid-template-columns:3.6rem 1fr;gap:.85rem}
+  .time{grid-column:2;text-align:left}
+  .date-block .d{font-size:1.7rem}
+}
+
+footer{margin:4rem 0 2.5rem;padding-top:1.5rem;border-top:1px solid var(--line);
+  color:var(--muted);font-size:.9rem;text-align:center}
+@media (prefers-reduced-motion:no-preference){
+  .next{animation:rise .6s ease-out both}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="leaf" style="width:22rem;left:-6rem;top:-5rem;transform:rotate(25deg)" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2C20 20 8 50 20 80c8 18 22 18 30 18s22 0 30-18C92 50 80 20 50 2zm0 10v84"/></svg>
+  <svg class="leaf" style="width:18rem;right:-5rem;bottom:-6rem;transform:rotate(-140deg)" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2C20 20 8 50 20 80c8 18 22 18 30 18s22 0 30-18C92 50 80 20 50 2z"/></svg>
+  <p class="brand">WILDFIT</p>
+  <p class="by">ERIC EDMEADES</p>
+  <div class="rule"></div>
+  <h1>2026 Live Calls</h1>
+  <p class="sub">Your 90-day challenge, call by call. Every call is at 5:00 pm London time and lasts 60 minutes.</p>
+</header>
+
+<main class="wrap">
+  <section class="facts" aria-label="Key details">
+    <div class="fact"><b>18 calls</b><span>Oct 12, 2026 to Jan 2027</span></div>
+    <div class="fact"><b>5:00 pm London</b><span>60 minutes each</span></div>
+    <div class="fact"><b>3 calls a week</b><span>in weeks 1 and 2, then every Monday</span></div>
+  </section>
+
+  <div class="next" id="next" hidden>
+    <span class="label">Next call</span>
+    <span class="when" id="nextWhen"></span>
+    <span class="countdown" id="nextCount"></span>
+  </div>
+
+  <p class="notice"><strong>London clocks change on Oct 25.</strong> Calls stay at 5:00 pm London time, but from Oct 26 the time may shift by an hour where you live. Please check the time in your own time zone.</p>
+
+  <div id="months"></div>
+
+  <footer>WILDFIT 2026 · All calls at 5 pm London time, 60 minutes</footer>
+</main>
+
+<script>
+const calls = [
+  {date:"2026-10-12", day:1,  week:"Week 1", note:"Opening Celebration Call", special:true},
+  {date:"2026-10-14", day:3,  week:"Week 1"},
+  {date:"2026-10-16", day:5,  week:"Week 1"},
+  {date:"2026-10-19", day:8,  week:"Week 2"},
+  {date:"2026-10-21", day:10, week:"Week 2"},
+  {date:"2026-10-23", day:12, week:"Week 2"},
+  {date:"2026-10-26", day:15, week:"Week 3"},
+  {date:"2026-11-02", day:22, week:"Week 4"},
+  {date:"2026-11-09", day:29, week:"Week 5"},
+  {date:"2026-11-16", day:36, week:"Week 6"},
+  {date:"2026-11-23", day:43, week:"Week 7"},
+  {date:"2026-11-30", day:50, week:"Week 8"},
+  {date:"2026-12-07", day:57, week:"Week 9"},
+  {date:"2026-12-14", day:64, week:"Week 10"},
+  {date:"2026-12-21", day:71, week:"Week 11"},
+  {date:"2026-12-28", day:78, week:"Week 12"},
+  {date:"2027-01-04", day:85, week:"Week 13"},
+  {date:"2027-01-11", alt:"2027-01-18", day:"92 or 99", week:"Week 14 or 15", note:"Celebration / Reunion Call", tbd:true}
+];
+
+// 5pm London: BST (UTC+1) until Oct 25, 2026, then GMT (UTC+0)
+function startUTC(iso){
+  const [y,m,d] = iso.split("-").map(Number);
+  const bst = (y===2026 && (m<10 || (m===10 && d<25)));
+  return new Date(Date.UTC(y,m-1,d, bst?16:17, 0));
+}
+const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "your time zone";
+const fmtTime = t => t.toLocaleTimeString([], {hour:"numeric", minute:"2-digit"});
+const fmtLocalDay = t => t.toLocaleDateString([], {weekday:"short", month:"short", day:"numeric"});
+const tzShort = t => (t.toLocaleTimeString([], {timeZoneName:"short"}).split(" ").pop());
+const now = new Date();
+
+function localLine(iso){
+  const s = startUTC(iso), e = new Date(s.getTime()+3600e3);
+  const sameDay = s.toLocaleDateString() === new Date(iso+"T12:00:00").toLocaleDateString();
+  return {s, text: fmtTime(s)+" – "+fmtTime(e), dayShift: sameDay ? "" : " ("+fmtLocalDay(s)+")"};
+}
+
+
+// next call
+const upcoming = calls.find(c => startUTC(c.date).getTime()+3600e3 > now.getTime());
+if (upcoming){
+  const s = startUTC(upcoming.date);
+  const box = document.getElementById("next"); box.hidden = false;
+  document.getElementById("nextWhen").textContent =
+    new Date(upcoming.date+"T12:00:00").toLocaleDateString("en-GB", {weekday:"long", day:"numeric", month:"long"})+" at 5:00 pm London"+(upcoming.tbd?" (date to be confirmed)":"");
+  const diff = s - now;
+  const days = Math.floor(diff/864e5), hrs = Math.floor(diff%864e5/36e5);
+  document.getElementById("nextCount").textContent = diff<=0 ? "Happening now"
+    : days>0 ? "in "+days+" day"+(days>1?"s":"")+(hrs?" and "+hrs+" h":"") : "in "+hrs+" h "+Math.floor(diff%36e5/6e4)+" min";
+}
+
+// months
+const monthsEl = document.getElementById("months");
+const months = [[2026,9],[2026,10],[2026,11],[2027,0]];
+const todayISO = [now.getFullYear(), String(now.getMonth()+1).padStart(2,"0"), String(now.getDate()).padStart(2,"0")].join("-");
+const iso = (y,m,d)=> y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+
+months.forEach(([y,m])=>{
+  const name = new Date(y,m,1).toLocaleDateString("en-GB",{month:"long"});
+  const inMonth = calls.filter(c => c.date.startsWith(iso(y,m,1).slice(0,7)));
+  const sec = document.createElement("section"); sec.className="month";
+  sec.innerHTML = `<h2>${name} <small>${y} · ${inMonth.length} call${inMonth.length>1?"s":""}</small></h2>`;
+  const body = document.createElement("div"); body.className="month-body";
+
+  // grid (Mon-first)
+  const g = document.createElement("div"); g.className="grid"; g.setAttribute("aria-hidden","true");
+  let html = '<div class="dow">'+["M","T","W","T","F","S","S"].map(d=>`<span>${d}</span>`).join("")+'</div><div class="days">';
+  const first = (new Date(y,m,1).getDay()+6)%7, last = new Date(y,m+1,0).getDate();
+  for(let i=0;i<first;i++) html+='<span></span>';
+  for(let d=1; d<=last; d++){
+    const id = iso(y,m,d);
+    const c = calls.find(c=>c.date===id);
+    const isAlt = calls.some(c=>c.alt===id);
+    let cls=[];
+    if(c && !c.tbd) cls.push("call");
+    if((c && c.tbd) || isAlt) cls.push("tbd");
+    if(c && startUTC(c.date).getTime()+3600e3 < now.getTime()) cls.push("past");
+    if(id===todayISO) cls.push("today");
+    html+=`<span class="${cls.join(" ")}">${d}</span>`;
+  }
+  g.innerHTML = html+'</div>';
+
+  // list
+  const ul = document.createElement("ol"); ul.className="calls";
+  inMonth.forEach(c=>{
+    const L = localLine(c.date);
+    const past = startUTC(c.date).getTime()+3600e3 < now.getTime();
+    const li = document.createElement("li");
+    li.className = "call-row"+(c.special?" special":"")+(c.tbd?" tbd":"")+(past?" past":"")+(c===upcoming?" is-next":"");
+    const dt = new Date(c.date+"T12:00:00");
+    const wd = dt.toLocaleDateString("en-GB",{weekday:"long"});
+    let dateHTML, timeHTML;
+    if(c.tbd){
+      dateHTML = `<span class="d">11/18</span><span class="w">Mon</span>`;
+      const L2 = localLine(c.alt);
+      timeHTML = `<div class="local">5:00 – 6:00 pm</div><div class="ldn">London time</div>`;
+    } else {
+      dateHTML = `<span class="d">${dt.getDate()}</span><span class="w">${wd.slice(0,3)}</span>`;
+      timeHTML = `<div class="local">5:00 – 6:00 pm</div><div class="ldn">London time</div>`;
+    }
+    const title = c.tbd ? `${c.note}<span class="pill gold">Date TBC</span>`
+      : `Challenge Day ${c.day}${c.note?`<span class="pill">${c.note}</span>`:""}`;
+    const meta = c.tbd ? `Monday Jan 11 or Jan 18 · Day ${c.day} · ${c.week}` : `${wd} · ${c.week}`;
+    li.innerHTML = `<div class="date-block">${dateHTML}</div>
+      <div class="info"><div class="t">${title}</div><div class="m">${meta}</div></div>
+      <div class="time">${timeHTML}</div>`;
+    ul.appendChild(li);
+  });
+
+  body.append(g, ul); sec.appendChild(body); monthsEl.appendChild(sec);
+});
+</script>
+</body>
+</html>
